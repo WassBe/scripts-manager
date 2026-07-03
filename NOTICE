@@ -1,0 +1,25 @@
+Scripts Manager
+Copyright (c) 2026 Wass B.
+
+This product is developed and maintained by Wass B.
+
+It is built on the following third-party components, each under its own
+license, unmodified and used as dependencies:
+
+- Tauri (https://tauri.app) — MIT / Apache-2.0
+  Application framework: window shell, tray icon, process bridge.
+- tauri-plugin-dialog — MIT / Apache-2.0
+  Native file picker and confirmation dialogs.
+- tauri-plugin-opener — MIT / Apache-2.0
+  Part of the default Tauri scaffold.
+- React (https://react.dev) — MIT
+  Frontend UI library.
+- Vite (https://vite.dev) — MIT
+  Frontend build tooling.
+- serde / serde_json — MIT / Apache-2.0
+  JSON serialization of the script registry.
+
+The pause/resume feature calls NtSuspendProcess / NtResumeProcess from
+ntdll.dll, part of Microsoft Windows. No Microsoft code is redistributed.
+
+Repetitive and boilerplate tasks assisted by Claude Code (Anthropic).
