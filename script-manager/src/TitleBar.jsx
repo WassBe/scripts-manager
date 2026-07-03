@@ -1,5 +1,6 @@
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { MoonIcon, SunIcon, XIcon } from "./Icons";
+import logo from "./assets/logo.png";
 import "./TitleBar.css";
 
 /** Custom title bar replacing the native frame: app title, theme toggle,
@@ -11,7 +12,10 @@ function TitleBar({ theme, onToggleTheme }) {
 
   return (
     <header className="title-bar">
-      <span className="title-bar-label">Scripts Manager</span>
+      <div className="title-bar-brand">
+        <img className="title-bar-logo" src={logo} alt="" aria-hidden="true" />
+        <span className="title-bar-label">Scripts Manager</span>
+      </div>
 
       <div className="title-bar-actions">
         <button

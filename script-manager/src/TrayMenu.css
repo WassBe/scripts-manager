@@ -17,6 +17,18 @@
   padding: 6px 10px 8px;
 }
 
+.tray-menu-brand {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.tray-menu-logo {
+  width: 14px;
+  height: 14px;
+  border-radius: 3px;
+}
+
 .tray-menu-title {
   font-size: 0.8em;
   font-weight: 600;

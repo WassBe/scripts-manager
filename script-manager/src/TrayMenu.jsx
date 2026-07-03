@@ -3,6 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { StopIcon, TerminalIcon, XIcon } from "./Icons";
 import { applyTheme, getStoredTheme } from "./theme";
+import logo from "./assets/logo.png";
 import "./TrayMenu.css";
 
 /** Custom tray context menu rendered in its own popup window, styled like the main app. */
@@ -50,7 +51,15 @@ function TrayMenu() {
   return (
     <div className="tray-menu">
       <div className="tray-menu-header">
-        <span className="tray-menu-title">Scripts Manager</span>
+        <span className="tray-menu-brand">
+          <img
+            className="tray-menu-logo"
+            src={logo}
+            alt=""
+            aria-hidden="true"
+          />
+          <span className="tray-menu-title">Scripts Manager</span>
+        </span>
         <span
           className={`tray-menu-status ${runningCount > 0 ? "active" : ""}`}
         >

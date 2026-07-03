@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.png" alt="Scripts Manager logo" width="96">
+</p>
+
 <h1 align="center">Scripts Manager</h1>
 
 <p align="center">
