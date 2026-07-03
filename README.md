@@ -2,7 +2,9 @@
   <img src="assets/logo.png" alt="Scripts Manager logo" width="96">
 </p>
 
-<h1 align="center">Scripts Manager</h1>
+<p align="center">
+  <img src=".github/thumbnail.png" alt="Logo" width="600">
+</p>
 
 <p align="center">
   <img alt="License" src="https://img.shields.io/badge/license-MIT-2ba898?style=flat">
