@@ -1,4 +1,4 @@
-# Scripts Manager
+<h1 align="center">Scripts Manager</h1>
 
 A small Windows tray app that keeps all your scripts in one place.
 
@@ -32,7 +32,7 @@ The manager only stores the path to your script. It never copies, edits, or dele
 You'll need [Rust](https://rustup.rs) and [Node.js](https://nodejs.org) installed.
 
 ```powershell
-cd source/script-manager
+cd script-manager
 npm install
 npm run tauri dev
 ```
@@ -47,10 +47,7 @@ npm run tauri build
 
 ## Documentation
 
-- [PROJECT.md](PROJECT.md) — project scope, tech stack, window behavior, process model, and security posture
-- [CONVENTION.md](CONVENTION.md) — the code and documentation convention this project follows
-
-Full user and technical guides will live in `source/documentation/` as the project matures.
+Full user and technical guides will live in `documentation/` as the project matures.
 
 ## Contributing
 

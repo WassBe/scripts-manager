@@ -1,4 +1,4 @@
-# Code Convention (WB.5-13-26b2)
+# Code Convention (WB.5-13-26b3)
 
 This convention is very easy to understand and follow, yet central for the good development of any project.
 The Wass B. 5/13/2026 (WB.5-13-26) convention is detailed below.
@@ -13,6 +13,12 @@ The Wass B. 5/13/2026 (WB.5-13-26) convention is detailed below.
 - if the source code is divided into multiple parts due to the project's complexity, then apply the same logic recursively *(e.g. cd root/source/ && ls : frontend/ backend/ ...)*
 - concerning assets or other domain files, they should be located in appropriate sub-folders from the root as well
 - concerning the save files, they should be located in *"root/saves/(e.g. psd)"*
+
+**When the project is open-sourced and the published repository is scoped to the `source/` sub-folder (rather than the parent folder itself):**
+- files meant to be published (README, CONTRIBUTING, LICENSE, NOTICE, this CONVENTION.md, and anything else a contributor or user should be able to read) live at the root of that published repository — i.e. `source/` becomes the repository root, so those files sit directly inside it
+- files that are internal-only and not meant to be public (e.g. PROJECT.md, private planning notes) stay at the true parent root, outside the published repository
+- a published file must never link to an internal-only file — it wouldn't exist for anyone cloning the repository. Say what's needed inline instead of linking out
+- a polished landing page like README should stay lean: it can omit links to internal contributor-only files (e.g. this CONVENTION.md) even when they are published, if a shorter Contributing pointer covers what a reader needs
 
 ### Files Name
 
@@ -155,3 +161,4 @@ Any update to the convention should be briefly noted below with its version name
 | WB.5-13-26   | Initial version                                                                                |
 | WB.5-13-26b1 | Added unified docstring / comment style (PEP 257 + JSDoc)                                      |
 | WB.5-13-26b2 | Added Documentation section (location, single source of truth, README structure, safety floor) |
+| WB.5-13-26b3 | Clarified file placement when the published repository is scoped to a `source/` sub-folder     |

@@ -19,7 +19,7 @@ Architecture decisions and project direction are set by the author. If you want 
 You need [Rust](https://rustup.rs), [Node.js](https://nodejs.org), and on Windows the WebView2 runtime (already present on Windows 10/11).
 
 ```powershell
-cd source/script-manager
+cd script-manager
 npm install
 npm run tauri dev
 ```
@@ -28,8 +28,8 @@ Frontend changes hot-reload. Rust changes trigger a recompile, which takes a few
 
 ## Where things live
 
-- `source/script-manager/src/` — React frontend (script list, terminal pane, tray menu popup, theming)
-- `source/script-manager/src-tauri/src/` — Rust backend:
+- `script-manager/src/` — React frontend (script list, terminal pane, tray menu popup, theming)
+- `script-manager/src-tauri/src/` — Rust backend:
   - `lib.rs` — app setup, tray icon, window management
   - `scripts.rs` — the script registry (add/remove/persist)
   - `runner.rs` — process spawning, output streaming, pause/resume, stdin
@@ -50,4 +50,4 @@ Open an issue with three things: what you ran, what you expected, and what happe
 
 ## Security
 
-If you find a vulnerability, don't open a public issue. Contact the author directly. The project's security posture (what is and isn't protected against) is documented honestly in [PROJECT.md](PROJECT.md) — read it before reporting things that are stated design decisions, like scripts running unsandboxed.
+If you find a vulnerability, don't open a public issue. Contact the author directly. Note that some behaviors are stated design decisions rather than bugs: scripts run unsandboxed with the user's own privileges, pause is a hard process freeze, and there is no remote/network access in this version.
