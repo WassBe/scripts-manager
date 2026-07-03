@@ -3,9 +3,15 @@ mod scripts;
 
 use std::sync::Mutex;
 use tauri::{
+    image::Image,
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
     Manager, PhysicalPosition, PhysicalSize, WebviewWindow,
 };
+
+/// The raw app logo, unpadded, used for the tray icon. Kept separate from
+/// `icons/icon.png` (Tauri's generated icon set), which adds platform
+/// padding that makes the logo look shrunk at tray size.
+const TRAY_LOGO_BYTES: &[u8] = include_bytes!("../icons/tray-source.png");
 
 /// Moves the window to the bottom-right corner of the monitor's work area
 /// (the screen space excluding the taskbar).
@@ -83,8 +89,10 @@ fn handle_tray_event(tray: &tauri::tray::TrayIcon, event: TrayIconEvent) {
 
 /// Builds the tray icon; both menus are handled by the app's own windows.
 fn setup_tray(app: &tauri::App) -> tauri::Result<()> {
+    let icon = Image::from_bytes(TRAY_LOGO_BYTES)?;
+
     TrayIconBuilder::new()
-        .icon(app.default_window_icon().unwrap().clone())
+        .icon(icon)
         .on_tray_icon_event(handle_tray_event)
         .build(app)?;
 
