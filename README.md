@@ -1,8 +1,4 @@
 <p align="center">
-  <img src="assets/logo.png" alt="Scripts Manager logo" width="96">
-</p>
-
-<p align="center">
   <img src=".github/thumbnail.png" alt="Logo" width="600">
 </p>
 
