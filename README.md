@@ -1,5 +1,13 @@
 <h1 align="center">Scripts Manager</h1>
 
+<p align="center">
+  <img alt="License" src="https://img.shields.io/badge/license-MIT-2ba898?style=flat-square">
+  <img alt="Platform" src="https://img.shields.io/badge/platform-Windows-2ba898?style=flat-square">
+  <img alt="Built with Tauri" src="https://img.shields.io/badge/built%20with-Tauri-2ba898?style=flat-square">
+  <img alt="Built with React" src="https://img.shields.io/badge/built%20with-React-2ba898?style=flat-square">
+  <img alt="Last commit" src="https://img.shields.io/github/last-commit/WassBe/scripts-manager?style=flat-square&color=2ba898">
+</p>
+
 A small Windows tray app that keeps all your scripts in one place.
 
 ## What it is
