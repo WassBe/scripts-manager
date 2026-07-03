@@ -12,6 +12,8 @@ license, unmodified and used as dependencies:
   Native file picker and confirmation dialogs.
 - tauri-plugin-opener — MIT / Apache-2.0
   Part of the default Tauri scaffold.
+- tauri-plugin-autostart — MIT / Apache-2.0
+  "Start at login" toggle (registers the app in the Windows Run registry key).
 - React (https://react.dev) — MIT
   Frontend UI library.
 - Vite (https://vite.dev) — MIT

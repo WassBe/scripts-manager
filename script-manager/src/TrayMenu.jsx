@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { getCurrentWindow } from "@tauri-apps/api/window";
-import { StopIcon, TerminalIcon, XIcon } from "./Icons";
+import {
+  disable,
+  enable,
+  isEnabled,
+} from "@tauri-apps/plugin-autostart";
+import { CheckIcon, StopIcon, TerminalIcon, XIcon } from "./Icons";
 import { applyTheme, getStoredTheme } from "./theme";
 import logo from "./assets/logo.png";
 import "./TrayMenu.css";
@@ -9,6 +14,7 @@ import "./TrayMenu.css";
 /** Custom tray context menu rendered in its own popup window, styled like the main app. */
 function TrayMenu() {
   const [runningCount, setRunningCount] = useState(0);
+  const [autostart, setAutostart] = useState(false);
 
   useEffect(() => {
     const menuWindow = getCurrentWindow();
@@ -16,6 +22,7 @@ function TrayMenu() {
     invoke("get_running_scripts").then((entries) =>
       setRunningCount(entries.length)
     );
+    isEnabled().then(setAutostart);
 
     // Refresh the running count and theme each time the menu is opened.
     const unlistenFocus = menuWindow.onFocusChanged(({ payload: focused }) => {
@@ -24,6 +31,7 @@ function TrayMenu() {
         invoke("get_running_scripts").then((entries) =>
           setRunningCount(entries.length)
         );
+        isEnabled().then(setAutostart);
       }
     });
 
@@ -46,6 +54,18 @@ function TrayMenu() {
   async function runAction(action) {
     await getCurrentWindow().hide();
     await action();
+  }
+
+  /** Toggles launching the app at Windows login; the menu stays open
+      so the check mark gives immediate feedback. */
+  async function toggleAutostart() {
+    if (autostart) {
+      await disable();
+    } else {
+      await enable();
+    }
+
+    setAutostart(await isEnabled());
   }
 
   return (
@@ -82,6 +102,13 @@ function TrayMenu() {
       >
         <StopIcon size={14} />
         Stop all scripts
+      </button>
+
+      <button className="tray-menu-item" onClick={toggleAutostart}>
+        <span className={`tray-menu-check ${autostart ? "checked" : ""}`}>
+          {autostart && <CheckIcon size={12} />}
+        </span>
+        Start at login
       </button>
 
       <div className="tray-menu-separator" />

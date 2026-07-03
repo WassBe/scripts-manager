@@ -26,7 +26,7 @@
         "label": "traymenu",
         "title": "Scripts Manager Menu",
         "width": 230,
-        "height": 160,
+        "height": 195,
         "visible": false,
         "skipTaskbar": true,
         "decorations": false,

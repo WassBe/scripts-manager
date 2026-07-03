@@ -103,6 +103,15 @@ export function MoonIcon({ size }) {
   );
 }
 
+/** Check mark for toggleable menu items. */
+export function CheckIcon({ size }) {
+  return (
+    <Icon size={size}>
+      <polyline points="20 6 9 17 4 12" />
+    </Icon>
+  );
+}
+
 /** Trash symbol for clearing the terminal history. */
 export function TrashIcon({ size }) {
   return (

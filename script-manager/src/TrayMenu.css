@@ -84,6 +84,22 @@
   color: #ffffff;
 }
 
+.tray-menu-check {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 14px;
+  height: 14px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--accent);
+  flex-shrink: 0;
+}
+
+.tray-menu-check.checked {
+  border-color: var(--accent);
+}
+
 .tray-menu-separator {
   height: 1px;
   margin: 5px 8px;
