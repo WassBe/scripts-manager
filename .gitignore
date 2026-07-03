@@ -1,5 +1,2 @@
 # Personal scripts kept locally, never committed
 /scripts/
-
-# Local Claude Code tool state, not project content
-/.claude/
