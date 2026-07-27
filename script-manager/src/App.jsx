@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { listen } from "@tauri-apps/api/event";
+import { getCurrentWindow } from "@tauri-apps/api/window";
 import { ask, open } from "@tauri-apps/plugin-dialog";
 import TitleBar from "./TitleBar";
 import {
@@ -77,13 +78,35 @@ function App() {
   const inputRef = useRef(null);
 
   useEffect(() => {
-    invoke("get_scripts").then(setScripts);
-    invoke("get_running_scripts").then((entries) => {
-      setRunningIds(entries.map((entry) => entry.id));
-      setPausedIds(
-        entries.filter((entry) => entry.paused).map((entry) => entry.id)
-      );
-    });
+    /** Pulls the registry and running state from the backend. Runs on mount
+        and again whenever the window is shown, so a call that failed while
+        the app was still starting up cannot leave the list empty. */
+    async function refreshState() {
+      try {
+        setScripts(await invoke("get_scripts"));
+
+        const entries = await invoke("get_running_scripts");
+
+        setRunningIds(entries.map((entry) => entry.id));
+        setPausedIds(
+          entries.filter((entry) => entry.paused).map((entry) => entry.id)
+        );
+      } catch (message) {
+        setError(`Could not load your scripts: ${message}`);
+      }
+    }
+
+    refreshState();
+
+    const unlistenShown = listen("main-shown", refreshState);
+
+    const unlistenFocus = getCurrentWindow().onFocusChanged(
+      ({ payload: focused }) => {
+        if (focused) {
+          refreshState();
+        }
+      }
+    );
 
     const unlistenOutput = listen("script-output", (event) => {
       const { id, stream, chunk } = event.payload;
@@ -127,6 +150,8 @@ function App() {
     });
 
     return () => {
+      unlistenShown.then((unlisten) => unlisten());
+      unlistenFocus.then((unlisten) => unlisten());
       unlistenOutput.then((unlisten) => unlisten());
       unlistenExited.then((unlisten) => unlisten());
       unlistenDragEnter.then((unlisten) => unlisten());

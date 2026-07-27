@@ -5,7 +5,7 @@ use std::sync::Mutex;
 use tauri::{
     image::Image,
     tray::{MouseButton, MouseButtonState, TrayIconBuilder, TrayIconEvent},
-    Manager, PhysicalPosition, PhysicalSize, WebviewWindow,
+    Emitter, Manager, PhysicalPosition, PhysicalSize, WebviewWindow,
 };
 
 /// The raw app logo, unpadded, used for the tray icon. Kept separate from
@@ -48,6 +48,11 @@ fn toggle_main_window(app: &tauri::AppHandle) {
         position_bottom_right(&window);
         let _ = window.show();
         let _ = window.set_focus();
+
+        // The webview loads while the window is still hidden at startup and
+        // never remounts afterwards, so tell it to re-read its state every
+        // time it becomes visible.
+        let _ = window.emit("main-shown", ());
     }
 }
 
@@ -134,10 +139,15 @@ pub fn run() {
             toggle_main,
             quit_app
         ])
+        // Registered on the builder rather than inside `setup` so the state
+        // exists before the webview can invoke anything: at boot the registry
+        // load below is slow enough that commands could otherwise fire first
+        // and fail on unmanaged state.
+        .manage(scripts::ScriptRegistry(Mutex::new(Vec::new())))
+        .manage(runner::RunningScripts::default())
         .setup(|app| {
             let loaded = scripts::load_scripts(app.handle());
-            app.manage(scripts::ScriptRegistry(Mutex::new(loaded)));
-            app.manage(runner::RunningScripts::default());
+            *app.state::<scripts::ScriptRegistry>().0.lock().unwrap() = loaded;
 
             setup_tray(app)?;
             Ok(())

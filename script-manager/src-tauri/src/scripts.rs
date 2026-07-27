@@ -42,6 +42,10 @@ fn registry_file(app: &tauri::AppHandle) -> Result<PathBuf, String> {
 }
 
 /// Loads the persisted registry, or an empty list when none exists yet.
+///
+/// An unreadable registry is set aside rather than ignored: the app would
+/// otherwise start empty and overwrite the file on the next import, losing
+/// every entry it held.
 pub fn load_scripts(app: &tauri::AppHandle) -> Vec<Script> {
     let Ok(file) = registry_file(app) else {
         return Vec::new();
@@ -51,7 +55,20 @@ pub fn load_scripts(app: &tauri::AppHandle) -> Vec<Script> {
         return Vec::new();
     };
 
-    serde_json::from_str(&content).unwrap_or_default()
+    match serde_json::from_str(&content) {
+        Ok(scripts) => scripts,
+        Err(_) => {
+            let timestamp = SystemTime::now()
+                .duration_since(UNIX_EPOCH)
+                .map(|elapsed| elapsed.as_secs())
+                .unwrap_or_default();
+
+            let backup = file.with_file_name(format!("scripts.corrupt-{timestamp}.json"));
+            let _ = fs::rename(&file, &backup);
+
+            Vec::new()
+        }
+    }
 }
 
 /// Persists the registry to disk.
